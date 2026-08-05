@@ -1,0 +1,51 @@
+# mailofly
+
+Official **PHP** client for the [Mailofly REST API](https://docs.mailofly.com/api).
+
+Requires **PHP 8.1+**.
+
+> **Source of truth:** developed in the [mailofly monorepo](https://github.com/godstark82/mailofly) under `packages/php`. This public repo is mirrored automatically on change.
+
+## Install
+
+```bash
+composer require mailofly/mailofly
+```
+
+## Usage
+
+```php
+<?php
+
+use Mailofly\Client;
+use Mailofly\MailoflyException;
+
+$client = new Client(getenv('MAILOFLY_API_KEY'));
+
+try {
+    $result = $client->compose->send([
+        'account_key' => 'acc_…',
+        'subject' => 'Hello',
+        'body' => '<p>Hi from Mailofly</p>',
+        'recipients' => ['emails' => ['you@example.com']],
+    ]);
+    print_r($result);
+} catch (MailoflyException $e) {
+    fwrite(STDERR, "{$e->status} {$e->error} {$e->detailMessage}\n");
+}
+```
+
+## Docs
+
+- [PHP guide](https://docs.mailofly.com/sdks/php)
+- [API reference](https://docs.mailofly.com/api)
+
+## Releasing
+
+1. Bump `version` in `composer.json` (and this changelog) in the **monorepo** PR.
+2. Merge to `main`/`master` → GitHub Action syncs this folder to `teamredevs/mailofly-php`.
+3. Publish workflow creates a `v*` git tag; Packagist picks it up (connect the repo once).
+
+## License
+
+MIT

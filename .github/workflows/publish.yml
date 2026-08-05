@@ -1,0 +1,58 @@
+# Creates a v* git tag when composer.json version is new (Packagist watches tags).
+#
+# One-time: submit https://github.com/teamredevs/mailofly-php on packagist.org
+# and enable GitHub Service Hook / Auto-Update.
+#
+# Permissions: contents: write (to push tags)
+
+name: Publish
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: publish-packagist
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Tag release for Packagist
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+
+      - name: Install
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Test
+        run: composer test
+
+      - name: Tag if new version
+        run: |
+          set -euo pipefail
+          VERSION="$(php -r 'echo json_decode(file_get_contents("composer.json"))->version;')"
+          TAG="v${VERSION}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists — skipping."
+            exit 0
+          fi
+          git config user.name "mailofly-bot"
+          git config user.email "bot@mailofly.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+          echo "Created and pushed $TAG"

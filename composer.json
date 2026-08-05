@@ -1,0 +1,42 @@
+{
+  "name": "mailofly/mailofly",
+  "description": "Official PHP client for the Mailofly REST API.",
+  "version": "0.1.0",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["mailofly", "email", "api", "sdk", "client"],
+  "homepage": "https://docs.mailofly.com/sdks/php",
+  "authors": [
+    {
+      "name": "Mailofly"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/teamredevs/mailofly-php/issues",
+    "source": "https://github.com/teamredevs/mailofly-php",
+    "docs": "https://docs.mailofly.com/sdks/php"
+  },
+  "require": {
+    "php": ">=8.1",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^7.8"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mailofly\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Mailofly\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
