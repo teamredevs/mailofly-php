@@ -45,7 +45,10 @@ final class Http
             }
         }
 
-        $headers = ['Accept' => 'application/json'];
+        $headers = [
+            'Accept' => 'application/json',
+            'X-Mailofly-Client' => 'sdk/php',
+        ];
         if ($apiKey !== null) {
             $headers['Authorization'] = 'Bearer ' . $apiKey;
         }
