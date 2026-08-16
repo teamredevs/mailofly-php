@@ -15,6 +15,7 @@ final class Client
     public readonly Segments $segments;
     public readonly Campaigns $campaigns;
     public readonly Compose $compose;
+    public readonly Emails $emails;
     public readonly MailLogs $mailLogs;
 
     public function __construct(string $apiKey, ?string $baseUrl = null)
@@ -31,6 +32,7 @@ final class Client
         $this->segments = new Segments($this);
         $this->campaigns = new Campaigns($this);
         $this->compose = new Compose($this);
+        $this->emails = new Emails($this);
         $this->mailLogs = new MailLogs($this);
     }
 

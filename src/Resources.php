@@ -243,7 +243,21 @@ final class Compose
     /** @param array<string, mixed> $params */
     public function send(array $params): mixed
     {
-        return $this->client->request('/compose', 'POST', $params);
+        return $this->client->request('/emails', 'POST', $params);
+    }
+}
+
+/** @internal */
+final class Emails
+{
+    public function __construct(private readonly Client $client)
+    {
+    }
+
+    /** @param array<string, mixed> $params */
+    public function send(array $params): mixed
+    {
+        return $this->client->request('/emails', 'POST', $params);
     }
 }
 

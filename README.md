@@ -23,13 +23,13 @@ use Mailofly\MailoflyException;
 $client = new Client(getenv('MAILOFLY_API_KEY'));
 
 try {
-    $result = $client->compose->send([
-        'account_key' => 'acc_…',
+    $result = $client->emails->send([
+        'from' => 'Acme <onboarding@example.com>',
+        'to' => ['you@example.com'],
         'subject' => 'Hello',
-        'body' => '<p>Hi from Mailofly</p>',
-        'recipients' => ['emails' => ['you@example.com']],
+        'html' => '<p>Hi from Mailofly</p>',
     ]);
-    print_r($result);
+    print_r($result['id']);
 } catch (MailoflyException $e) {
     fwrite(STDERR, "{$e->status} {$e->error} {$e->detailMessage}\n");
 }
