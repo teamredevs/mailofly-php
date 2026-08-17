@@ -33,6 +33,12 @@ try {
 } catch (MailoflyException $e) {
     fwrite(STDERR, "{$e->status} {$e->error} {$e->detailMessage}\n");
 }
+
+// Batch send
+$batch = $client->batch->send([
+    ['from' => 'Acme <onboarding@example.com>', 'to' => ['a@b.com'], 'subject' => 'Hi', 'html' => '<p>1</p>'],
+    ['from' => 'Acme <onboarding@example.com>', 'to' => ['c@d.com'], 'subject' => 'Hi', 'html' => '<p>2</p>'],
+]);
 ```
 
 ## Docs

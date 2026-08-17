@@ -259,6 +259,35 @@ final class Emails
     {
         return $this->client->request('/emails', 'POST', $params);
     }
+
+    public function get(string $id): mixed
+    {
+        return $this->client->request('/emails/' . rawurlencode($id));
+    }
+
+    /**
+     * @param array{limit?: int, after?: string, before?: string}|null $query
+     */
+    public function list(?array $query = null): mixed
+    {
+        /** @var array<string, scalar|null>|null $q */
+        $q = $query;
+        return $this->client->request('/emails', 'GET', null, $q);
+    }
+}
+
+/** @internal */
+final class Batch
+{
+    public function __construct(private readonly Client $client)
+    {
+    }
+
+    /** @param list<array<string, mixed>> $emails */
+    public function send(array $emails): mixed
+    {
+        return $this->client->request('/emails/batch', 'POST', $emails);
+    }
 }
 
 /** @internal */
