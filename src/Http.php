@@ -9,7 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 
 final class Http
 {
-    public const DEFAULT_BASE_URL = 'https://www.mailofly.com';
+    public const DEFAULT_BASE_URL = 'https://api.mailofly.com';
     public const API_PREFIX = '/api/v1';
 
     public static function normalizeBaseUrl(?string $baseUrl): string

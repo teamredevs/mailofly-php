@@ -9,6 +9,7 @@ final class Client
     private string $apiKey;
     private string $baseUrl;
 
+    public readonly Identities $identities;
     public readonly Accounts $accounts;
     public readonly Contacts $contacts;
     public readonly Templates $templates;
@@ -27,6 +28,7 @@ final class Client
         }
         $this->apiKey = $key;
         $this->baseUrl = Http::normalizeBaseUrl($baseUrl);
+        $this->identities = new Identities($this);
         $this->accounts = new Accounts($this);
         $this->contacts = new Contacts($this);
         $this->templates = new Templates($this);

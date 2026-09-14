@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Mailofly;
 
 /** @internal */
-final class Accounts
+final class Identities
 {
     public function __construct(private readonly Client $client)
     {
@@ -13,30 +13,29 @@ final class Accounts
 
     public function list(): mixed
     {
-        return $this->client->request('/accounts');
-    }
-
-    /** @param array<string, mixed> $body */
-    public function create(array $body): mixed
-    {
-        return $this->client->request('/accounts', 'POST', $body);
+        return $this->client->request('/identities');
     }
 
     public function get(string $id): mixed
     {
-        return $this->client->request('/accounts/' . rawurlencode($id));
+        return $this->client->request('/identities/' . rawurlencode($id));
     }
 
     /** @param array<string, mixed> $body */
     public function update(string $id, array $body): mixed
     {
-        return $this->client->request('/accounts/' . rawurlencode($id), 'PATCH', $body);
+        return $this->client->request('/identities/' . rawurlencode($id), 'PATCH', $body);
     }
 
     public function delete(string $id): mixed
     {
-        return $this->client->request('/accounts/' . rawurlencode($id), 'DELETE');
+        return $this->client->request('/identities/' . rawurlencode($id), 'DELETE');
     }
+}
+
+/** @internal @deprecated Use Identities */
+final class Accounts extends Identities
+{
 }
 
 /** @internal */
