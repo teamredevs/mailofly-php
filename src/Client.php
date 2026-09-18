@@ -40,12 +40,12 @@ final class Client
         $this->mailLogs = new MailLogs($this);
     }
 
-    /** Unauthenticated discovery (`GET /api/v1`). */
+    /** Unauthenticated discovery (`GET /`). */
     public static function discovery(?string $baseUrl = null): mixed
     {
         return Http::request(
             Http::normalizeBaseUrl($baseUrl),
-            Http::API_PREFIX,
+            Http::API_PREFIX !== '' ? Http::API_PREFIX : '/',
             'GET',
         );
     }
