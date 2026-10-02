@@ -1,7 +1,7 @@
 {
   "name": "mailofly/mailofly",
   "description": "Official PHP client for the Mailofly REST API.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "library",
   "license": "MIT",
   "keywords": ["mailofly", "email", "api", "sdk", "client"],

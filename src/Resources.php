@@ -313,3 +313,116 @@ final class MailLogs
         return $this->client->request('/mail-logs', 'GET', null, $q);
     }
 }
+
+/** @internal */
+final class AutomationRuns
+{
+    public function __construct(private readonly Client $client)
+    {
+    }
+
+    /**
+     * @param array{status?: string, limit?: int}|null $query
+     */
+    public function list(string $automationId, ?array $query = null): mixed
+    {
+        /** @var array<string, scalar|null>|null $q */
+        $q = $query;
+        return $this->client->request(
+            '/automations/' . rawurlencode($automationId) . '/runs',
+            'GET',
+            null,
+            $q,
+        );
+    }
+
+    public function get(string $automationId, string $runId): mixed
+    {
+        return $this->client->request(
+            '/automations/' . rawurlencode($automationId) . '/runs/' . rawurlencode($runId)
+        );
+    }
+}
+
+/** @internal */
+final class Automations
+{
+    public readonly AutomationRuns $runs;
+
+    public function __construct(private readonly Client $client)
+    {
+        $this->runs = new AutomationRuns($client);
+    }
+
+    /**
+     * @param array{status?: string, limit?: int}|null $query
+     */
+    public function list(?array $query = null): mixed
+    {
+        /** @var array<string, scalar|null>|null $q */
+        $q = $query;
+        return $this->client->request('/automations', 'GET', null, $q);
+    }
+
+    /** @param array<string, mixed> $body */
+    public function create(array $body): mixed
+    {
+        return $this->client->request('/automations', 'POST', $body);
+    }
+
+    public function get(string $id): mixed
+    {
+        return $this->client->request('/automations/' . rawurlencode($id));
+    }
+
+    /** @param array<string, mixed> $body */
+    public function update(string $id, array $body): mixed
+    {
+        return $this->client->request('/automations/' . rawurlencode($id), 'PATCH', $body);
+    }
+
+    public function delete(string $id): mixed
+    {
+        return $this->client->request('/automations/' . rawurlencode($id), 'DELETE');
+    }
+
+    public function stop(string $id): mixed
+    {
+        return $this->client->request('/automations/' . rawurlencode($id) . '/stop', 'POST');
+    }
+
+    public function duplicate(string $id): mixed
+    {
+        return $this->client->request('/automations/' . rawurlencode($id) . '/duplicate', 'POST');
+    }
+}
+
+/** @internal */
+final class Events
+{
+    public function __construct(private readonly Client $client)
+    {
+    }
+
+    /** @param array<string, mixed> $params */
+    public function send(array $params): mixed
+    {
+        return $this->client->request('/events/send', 'POST', $params);
+    }
+
+    /**
+     * @param array{name?: string, email?: string, limit?: int}|null $query
+     */
+    public function list(?array $query = null): mixed
+    {
+        /** @var array<string, scalar|null>|null $q */
+        $q = $query;
+        return $this->client->request('/events', 'GET', null, $q);
+    }
+
+    public function get(string $id): mixed
+    {
+        return $this->client->request('/events/' . rawurlencode($id));
+    }
+}
+

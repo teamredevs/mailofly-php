@@ -19,6 +19,8 @@ final class Client
     public readonly Emails $emails;
     public readonly Batch $batch;
     public readonly MailLogs $mailLogs;
+    public readonly Automations $automations;
+    public readonly Events $events;
 
     public function __construct(string $apiKey, ?string $baseUrl = null)
     {
@@ -38,6 +40,8 @@ final class Client
         $this->emails = new Emails($this);
         $this->batch = new Batch($this);
         $this->mailLogs = new MailLogs($this);
+        $this->automations = new Automations($this);
+        $this->events = new Events($this);
     }
 
     /** Unauthenticated discovery (`GET /`). */
